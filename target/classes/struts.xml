@@ -6,13 +6,133 @@
 
 <struts>
     <package name="demo" extends="struts-default">
-        <action name="loginForm" class="web.AccountAction">
-            <result name="input">/WEB-INF/jsp/Account/login.jsp</result>
+        <!--token拦截器-->
+        <action name="avoid" class="web.AvoidAction">
+            <interceptor-ref name="token"></interceptor-ref>
+            <interceptor-ref name="defaultStack"></interceptor-ref>
+
+            <result name="invalid.token">/WEB-INF/jsp/avoid/error.jsp</result>
+            <result name="success">/WEB-INF/jsp/order/ViewOrder.jsp</result>
         </action>
 
-        <action name="login" class="web.AccountAction" method="login">
-            <result name="input">/WEB-INF/jsp/Account/login.jsp</result>
-            <result name="success">/WEB-INF/jsp/Account/result.jsp</result>
+        <action name="goToInputAction" class="web.AvoidAction" method="goTOInput">
+            <result name="success">/WEB-INF/jsp/avoid/input.jsp</result>
         </action>
+
+        <action name="mainAction" class="web.MainAction">
+            <result name="success">/WEB-INF/jsp/catalog/Main.jsp</result>
+        </action>
+
+        <!--account部分-->
+        <action name="signOnFormAction" class="web.AccountAction" method="signOnForm">
+            <result name="login">/WEB-INF/jsp/account/SignOnForm.jsp</result>
+        </action>
+
+        <action name="signOnAction" class="web.AccountAction" method="signOn">
+            <result name="success">/WEB-INF/jsp/catalog/Main.jsp</result>
+            <result name="error">/WEB-INF/jsp/account/SignOnForm.jsp</result>
+        </action>
+
+        <action name="SecurityCodeImageAction" class="web.SecurityCodeImageAction">
+            <result name="success" type="stream">
+                <param name="contentType">image/jpeg</param>
+                <param name="inputName">imageStream</param>
+                <param name="bufferSize">2048</param>
+            </result>
+        </action>
+
+        <action name="registerFormAction" class="web.AccountAction" method="registerForm">
+            <result name="success">/WEB-INF/jsp/account/NewAccountForm.jsp</result>
+        </action>
+
+        <action name="registerAction" class="web.AccountAction" method="register">
+            <result name="success">/WEB-INF/jsp/catalog/Main.jsp</result>
+            <result name="error">WEB-INF/jsp/account/NewAccountForm.jsp</result>
+        </action>
+
+        <action name="editAccountFormAction" class="web.AccountAction" method="editAccountForm">
+            <result name="success">/WEB-INF/jsp/account/EditAccountForm.jsp</result>
+        </action>
+
+        <action name="editAccountAction" class="web.AccountAction" method="editAccount">
+            <result name="success">/WEB-INF/jsp/catalog/Main.jsp</result>
+            <result name="error">/WEB-INF/jsp/account/EditAccountForm.jsp</result>
+        </action>
+
+        <action name="signOutAction" class="web.AccountAction" method="signOut">
+            <result name="success">/WEB-INF/jsp/catalog/Main.jsp</result>
+        </action>
+
+        <!--Category部分-->
+        <action name="viewCategoryAction" class="web.CatalogAction" method="viewCategory">
+            <result name="success">/WEB-INF/jsp/catalog/Category.jsp</result>
+        </action>
+
+        <action name="viewProductAction" class="web.CatalogAction" method="viewProduct">
+            <result name="success">/WEB-INF/jsp/catalog/Product.jsp</result>
+        </action>
+
+        <action name="viewItemAction" class="web.CatalogAction" method="viewItem">
+            <result name="success">/WEB-INF/jsp/catalog/Item.jsp</result>
+        </action>
+
+        <!--Search部分-->
+        <action name="searchProductAction" class="web.SearchProductAction" method="search">
+            <result name="success">/WEB-INF/jsp/catalog/SearchProducts.jsp</result>
+        </action>
+
+        <!--Cart部分-->
+        <action name="viewCartAction" class="web.CartAction" method="viewCart">
+            <result name="success">/WEB-INF/jsp/cart/Cart.jsp</result>
+        </action>
+
+        <action name="addItemToCartAction" class="web.CartAction" method="addItemToCart">
+            <result name="success">/WEB-INF/jsp/cart/Cart.jsp</result>
+        </action>
+
+        <action name="removeItemFromCartAction" class="web.CartAction" method="removeItemFromCart">
+            <result name="success">/WEB-INF/jsp/cart/Cart.jsp</result>
+            <result name="error">/WEB-INF/jsp/common/Error.jsp</result>
+        </action>
+
+        <action name="updateCartAction" class="web.CartAction" method="updateCart">
+            <result name="success">/WEB-INF/jsp/cart/Cart.jsp</result>
+        </action>
+
+        <!--order部分-->
+        <action name="newOrderFormAction" class="web.OrderAction" method="viewOrder">
+            <result name="success">/WEB-INF/jsp/order/NewOrderForm.jsp</result>
+            <result name="login">/WEB-INF/jsp/account/SignOnForm.jsp</result>
+        </action>
+
+        <action name="viewConfirmOrderAction" class="web.OrderAction" method="viewConfirmOrder">
+            <result name="success">/WEB-INF/jsp/order/ConfirmOrder.jsp</result>
+            <result name="shipping">/WEB-INF/jsp/order/ShippingForm.jsp</result>
+        </action>
+
+        <action name="confirmShipAddressAction" class="web.OrderAction" method="confirmShip">
+            <result name="success">/WEB-INF/jsp/order/ConfirmOrder.jsp</result>
+        </action>
+
+        <action name="confirmOrderAction" class="web.OrderAction" method="confirmOrder">
+            <result name="success">/WEB-INF/jsp/order/ViewOrder.jsp</result>
+        </action>
+
+        <action name="viewMyOrdersAction" class="web.OrderAction" method="checkOrder">
+            <result name="success">/WEB-INF/jsp/order/ListOrders.jsp</result>
+        </action>
+
+        <action name="viewOrderByIdAction" class="web.OrderAction" method="viewOrderById">
+            <result name="success">/WEB-INF/jsp/order/ViewOrder.jsp</result>
+        </action>
+
+        <!--国际化-->
+        <action name="changelanAction" class="web.ChangelanAction">
+            <result name="success">/WEB-INF/jsp/catalog/Main.jsp</result>
+        </action>
+
     </package>
+
+    <constant name="struts.custom.i18n.resources" value="message"/>
+    <constant name="struts.i18n.encoding" value="UTF-8" />
 </struts>

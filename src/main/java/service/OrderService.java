@@ -16,16 +16,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class OrderService {
 
   SqlSessionFactory sqlSessionFactory = SqlSessionFactoryUtil.getSqlSessionFactory();
-  SqlSession session = sqlSessionFactory.openSession();
+  SqlSession sqlsession = sqlSessionFactory.openSession();
 
   @Autowired
-  private ItemDAO itemDAO = session.getMapper(ItemDAO.class);
+  private ItemDAO itemDAO = sqlsession.getMapper(ItemDAO.class);
   @Autowired
-  private OrderDAO orderDAO = session.getMapper(OrderDAO.class);
+  private OrderDAO orderDAO = sqlsession.getMapper(OrderDAO.class);
   @Autowired
-  private SequenceDAO sequenceDAO = session.getMapper(SequenceDAO.class);
+  private SequenceDAO sequenceDAO = sqlsession.getMapper(SequenceDAO.class);
   @Autowired
-  private LineItemDAO lineItemDAO = session.getMapper(LineItemDAO.class);
+  private LineItemDAO lineItemDAO = sqlsession.getMapper(LineItemDAO.class);
 
   public void insertOrder(Order order) {
     order.setOrderId(getNextId("ordernum"));
@@ -46,6 +46,8 @@ public class OrderService {
       lineItem.setOrderId(order.getOrderId());
       lineItemDAO.insertLineItem(lineItem);
     }
+    sqlsession.commit();
+    sqlsession.close();
   }
 
   public Order getOrder(int orderId) {

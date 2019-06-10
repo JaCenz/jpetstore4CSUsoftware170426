@@ -9,10 +9,10 @@ import persistence.SqlSessionFactoryUtil;
 public class AccountService{
 
     SqlSessionFactory sqlSessionFactory = SqlSessionFactoryUtil.getSqlSessionFactory();
-    SqlSession session = sqlSessionFactory.openSession();
-    AccountDAO accountDAO = session.getMapper(AccountDAO.class);
+    SqlSession sqlsession = sqlSessionFactory.openSession();
+    AccountDAO accountDAO = sqlsession.getMapper(AccountDAO.class);
 
-    Account getAccountByUsername(String username)
+    public Account getAccountByUsername(String username)
     {
         return accountDAO.getAccountByUsername(username);
     }
@@ -28,6 +28,8 @@ public class AccountService{
         accountDAO.insertAccount(account);
         accountDAO.insertProfile(account);
         accountDAO.insertSignon(account);
+        sqlsession.commit();
+        sqlsession.close();
     }
 
     public void updateAccount(Account account) {
@@ -37,5 +39,7 @@ public class AccountService{
         if (account.getPassword() != null && account.getPassword().length() > 0) {
             accountDAO.updateSignon(account);
         }
+        sqlsession.commit();
+        sqlsession.close();
     }
 }

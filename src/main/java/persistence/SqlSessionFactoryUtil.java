@@ -1,9 +1,7 @@
 package persistence;
 
-import com.sun.org.apache.xpath.internal.operations.Or;
 import domain.Account;
 import domain.Item;
-import domain.Order;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
