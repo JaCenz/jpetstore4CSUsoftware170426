@@ -37,9 +37,8 @@ public class Order implements Serializable {
   private String cardType;
   private String locale;
   private String status;
+  private boolean ShippingAddressRequired;
   private List<LineItem> lineItems = new ArrayList<LineItem>();
-
-  public Order(){}
 
   public int getOrderId() {
     return orderId;
@@ -257,7 +256,7 @@ public class Order implements Serializable {
     return lineItems;
   }
 
-  /*public void initOrder(Account account, Cart cart) {
+  public void initOrder(Account account, Cart cart) {
 
     username = account.getUsername();
     orderDate = new Date();
@@ -295,15 +294,23 @@ public class Order implements Serializable {
       addLineItem(cartItem);
     }
 
-  }*/
+  }
 
-  /*public void addLineItem(CartItem cartItem) {
+  public void addLineItem(CartItem cartItem) {
     LineItem lineItem = new LineItem(lineItems.size() + 1, cartItem);
     addLineItem(lineItem);
-  }*/
+  }
 
-  /*public void addLineItem(LineItem lineItem) {
+  public void addLineItem(LineItem lineItem) {
     lineItems.add(lineItem);
-  }*/
+  }
+
+  public boolean isShippingAddressRequired() {
+    return ShippingAddressRequired;
+  }
+
+  public void setShippingAddressRequired(boolean shippingAddressRequired) {
+    ShippingAddressRequired = shippingAddressRequired;
+  }
 
 }

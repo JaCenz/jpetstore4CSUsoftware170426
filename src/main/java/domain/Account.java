@@ -8,6 +8,7 @@ public class Account implements Serializable {
 
     private String username;
     private String password;
+    private String repeatedPassword;
     private String email;
     private String firstName;
     private String lastName;
@@ -27,9 +28,7 @@ public class Account implements Serializable {
 
     public Account(){}
 
-    public String getUsername() {
-        return username;
-    }
+    public String getUsername() { return username; }
 
     public void setUsername(String username) {
         this.username = username;
@@ -42,6 +41,10 @@ public class Account implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String getRepeatedPassword() { return repeatedPassword; }
+
+    public void setRepeatedPassword(String repeatedPassword) { this.repeatedPassword = repeatedPassword; }
 
     public String getEmail() {
         return email;
